@@ -9,7 +9,7 @@ username: {
         required: true,
         unique: true
     },
-password: {
+hash: {
         type: String,
         required: true,
         unique: false

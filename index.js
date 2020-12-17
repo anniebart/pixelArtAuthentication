@@ -6,6 +6,8 @@ const ejsMate = require('ejs-mate')
 const PORT = 3000 || process.env.PORT;
 const mongoose = require('mongoose');
 const User = require('./models/user')
+const bcrypt = require('bcrypt')
+const saltRounds = 10
 
 mongoose.connect('mongodb://localhost:27017/artAuth', {
     useNewUrlParser: true,
@@ -50,10 +52,10 @@ app.get('/secret', (req, res)=>{
 
 app.post('/signup', async(req, res)=>{
     try{const {username, password} = req.body
-  
-    const user = new User({username, password})
+    const hash = bcrypt.hashSync(password, saltRounds);
+    const user = new User({username, hash})
      user.save()
-     console.log(user)
+     
      res.redirect('/secret')
     } 
     catch(err){
@@ -65,9 +67,10 @@ app.post('/login', async(req, res)=>{
     try{
     const data = await req.body
     const user = await User.findOne({ username: data.username})
-
+       
         if (user){
-    if (user.password == data.password){
+    if (bcrypt.compareSync(data.password, user.hash)){
+        
         
     res.redirect('/secret') } else {res.redirect('/oops')}
 
