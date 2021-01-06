@@ -8,8 +8,8 @@ I decided to implement my own alternative to traditional authentication, but wit
 
 Each tile is an input with a specified value - once the user is satisied with their sequence, they can save it to be used as their authentication. This concatenates the values of the sequence. 
 
-## Uhhh...what about security?
-This is still very much a work in progress. The next step is add encryption/hashing/salting to the stored password. Other areas for exploration and further work include reimagining what a username is- is it pixel art as well? Or something else? And how can this authentication method be protected against sneaky people peering over the shoulder of the user as they input their "password"?
+# Is this...secure?
+This is still very much a work in progress and much remains to be done regarding user input validation, etc. As of now, [Bcrypt](https://www.npmjs.com/package/bcrypt) is used to hash + salt the pass-pixel/"password" stored in the database. 
 
 
 
